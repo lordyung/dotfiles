@@ -1,0 +1,12 @@
+#!/bin/bash
+
+
+if [ ! -d ~/dist/src ]; then
+    git clone git@code.aliyun.com:dist/src.git ~/dist/src
+fi
+if [ ! -d ~/dist/files ]; then
+    git clone git@code.aliyun.com:dist/files.git ~/dist/files
+fi
+if [ ! -d ~/dist/conf ]; then
+    git clone git@code.aliyun.com:dist/conf.git ~/dist/conf
+fi

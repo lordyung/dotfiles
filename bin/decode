@@ -1,0 +1,15 @@
+#!/bin/bash
+# decode filename in directory
+kfile=~/.ssh/id_rsa
+
+if  [ -f .safe ]; then
+    for file in *
+    do
+        mv  $file $(echo $file | base64 -d)
+        # mv  $file $(echo $file | openssl base64 -kfile $kfile -base64 -d)
+    done
+    rm -f .safe
+fi
+
+
+

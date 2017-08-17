@@ -1,0 +1,5 @@
+#!/bin/bash
+
+if [ ! -d ~/.notes ]; then
+    git clone git@code.aliyun.com:lordyung/notes ~/.notes
+fi

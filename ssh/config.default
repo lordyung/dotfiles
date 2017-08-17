@@ -1,0 +1,5 @@
+host git
+user git
+hostname localhost
+port 22
+identityfile ~/.ssh/id_rsa

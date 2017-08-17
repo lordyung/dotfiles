@@ -1,0 +1,112 @@
+#!/bin/bash
+set -e;
+prefix=$PWD
+
+function sub_gs()
+{
+    for file in `find -iname .git`
+    do
+        path=${file%/*}
+        cd ${prefix}/${path} && pwd
+        git status
+        echo ------------------------------------------
+    done
+}
+
+function sub_ls()
+{
+    for file in `find -iname .git`
+    do
+        path=${file%/*}
+        cd ${prefix}/${path} && pwd
+        # git status
+        # echo ------------------------------------------
+    done
+}
+function sub_gl()
+{
+    for file in `find -iname .git`
+    do
+        path=${file%/*}
+        cd ${prefix}/${path} && pwd
+        git pull
+        echo ------------------------------------------
+    done
+}
+
+function sub_gp()
+{
+    for file in `find -iname .git`
+    do
+        path=${file%/*}
+        cd ${prefix}/${path} && pwd
+        git push
+        echo ------------------------------------------
+    done
+}
+
+function sub_diff()
+{
+    for file in `find -iname .git`
+    do
+        path=${file%/*}
+        cd ${prefix}/${path} && pwd
+        git diff
+        echo ------------------------------------------
+    done
+}
+
+function sub_show()
+{
+    for file in `find -iname .git`
+    do
+        path=${file%/*}
+        cd ${prefix}/${path} && pwd
+        git show HEAD
+        echo ------------------------------------------
+    done
+}
+
+function sub_co()
+{
+    for file in `find -iname .git`
+    do
+        path=${file%/*}
+        cd ${prefix}/${path} && pwd
+        git checkout $1 $2 $3
+        echo git checkout $1 $2 $3
+        echo ------------------------------------------
+    done
+}
+function sub_foreach()
+{
+    for file in `find -iname .git`
+    do
+        path=${file%/*}
+        cd ${prefix}/${path} && pwd
+        $1 $2 $3
+        echo ------------------------------------------
+    done
+}
+
+case $1 in
+    'ls')
+        sub_ls;;
+    'gl')
+        sub_gl;;
+    'gp')
+        sub_gp;;
+    'gs')
+        sub_gs;;
+    'fe')
+        sub_foreach $2 $3 $4 $5;;
+    'diff')
+        sub_diff;;
+    'show')
+        sub_show;;
+    'co')
+        echo sub_co $2 $3 $4 $5
+        sub_co $2 $3 $4 $5;;
+    *)
+        echo 'unkown command'
+esac

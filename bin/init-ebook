@@ -1,0 +1,9 @@
+#!/bin/bash
+
+list=(arch art c-cpp database linux other scripts tools)
+for file in ${list[*]}
+do
+    if [ ! -d ~/ebook/${file}/.git ];then
+        git clone git@code.aliyun.com:e-book/${file}.git ~/ebook/${file}
+    fi
+done
