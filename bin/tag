@@ -1,0 +1,12 @@
+#!/bin/bash
+rm  -rf cscope*
+find $PWD/$1 \
+    -iname "*.h" -o \
+    -iname "*.c" -o \
+    -iname "*.cpp" -o \
+    -path .git -prune -o \
+    -path .rcc -prune -o \
+    -path .moc -prune > cscope.files
+ctags --c-kinds=+p --c++-kinds=+p  -L cscope.files
+cat cscope.files |wc -l
+cscope -bqu
