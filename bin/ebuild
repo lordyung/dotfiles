@@ -1,0 +1,3 @@
+#!/bin/bash
+
+find ~/.ebuild -iname $1 |grep --color=always $1
