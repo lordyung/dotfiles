@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo http://$(qshell domains $1)/$2
