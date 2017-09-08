@@ -1,0 +1,11 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=4938
+
+Simple syntax updates for CMake (www.cmake.org) syntax highlighting in Vim, to include new names added all the way to cmake v2.8.12
+
+This script is only an after/syntax file and it still uses the syntax/cmake.vim file provided by Vim. Script only adds new language keywords and names to be highlighted.
+
+Syntax changes:
+   - new CMake commands
+   - CMake-provided variables 
+   - CMake properties
+   - CMake "generator expressions"

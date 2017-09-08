@@ -1,0 +1,9 @@
+!bundle/vim-multiple-cursors/.rspec
+!bundle/vim-multiple-cursors/.travis.yml
+!bundle/neocomplete.vim/.travis.yml
+!bundle/vim-easymotion/.travis.yml
+!bundle/vim-airline/.travis.yml
+!bundle/vim-markdown/.travis.yml
+!bundle/vim-clang-format/.travis.yml
+!.editorconfig
+tags.vim

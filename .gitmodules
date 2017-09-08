@@ -1,9 +1,0 @@
-[submodule "vim"]
-	path = vim
-	url = git@code.aliyun.com:lordyung/vimrc.git
-[submodule "zsh"]
-	path = zsh
-	url = git@code.aliyun.com:lordyung/zshrc.git
-[submodule "tmux"]
-	path = tmux
-	url = git@code.aliyun.com:lordyung/tmux.git

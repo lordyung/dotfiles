@@ -1,0 +1,628 @@
+" Bundles{
+
+" The next three lines ensure that the ~/.vim/bundle/ system works
+set nocompatible        " Must be first line
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'c.vim'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'vim-scripts/cmake'
+Plugin 'fholgado/minibufexpl.vim'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'kien/ctrlp.vim'
+Plugin 'tacahiroy/ctrlp-funky'
+Plugin 'majutsushi/tagbar'
+Plugin 'matchit.zip'
+Plugin 'godlygeek/tabular'
+Plugin 'msanders/snipmate.vim'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'Shougo/neocomplete.vim'
+Plugin 'rhysd/vim-clang-format'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'tomasr/molokai'
+Plugin 'vim-perl/vim-perl'
+Plugin 'tpope/vim-surround'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-scripts/ShowMarks'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'christoomey/vim-system-copy'
+
+" Plugin 'mileszs/ack.vim'
+" Plugin 'brookhong/cscope.vim'
+" Plugin 'elzr/vim-json'
+" Plugin 'tpope/vim-git'
+" Plugin 'mattn/webapi-vim'
+" Plugin 'mattn/gist-vim'
+" Plugin 'sjl/gundo.vim'
+" Plugin 'christoomey/vim-tmux-navigator'
+"
+" Plugin 'Yggdroot/indentLine'
+" Plugin 'Yggdroot/indentLine' "indent
+" Plugin 'nathanaelkane/vim-indent-guides'
+" Plugin 'hynek/vim-python-pep8-indent'
+" Plugin 'nathanaelkane/vim-indent-guides'
+"
+" Plugin 'mbbill/undotree'
+" Plugin 'tpope/vim-fugitive'
+" Plugin 'artur-shaik/vim-javacomplete2'
+" Plugin 'xolox/vim-session'
+" Plugin 'kshenoy/vim-signature'
+" Plugin 'xolox/vim-lua-ftplugin'
+" Plugin 'Shougo/unite.vim'
+" Plugin 'yegappan/mru'
+
+" Plugin 'shawncplus/phpcomplete.vim'
+" Plugin 'arnaud-lb/vim-php-namespace'
+" Plugin 'spf13/PIV'
+
+
+" Plugin 'python-mode/python-mode'
+" Plugin 'vim-scripts/python.vim'
+" Plugin 'FelikZ/ctrlp-py-matcher'
+" Plugin 'vim-scripts/pythoncomplete'
+
+" Plugin 'ervandew/supertab'
+
+" Plugin 'HTML-AutoCloseTag'
+" Plugin 'closetag.vim'
+" Plugin 'lilydjwg/colorizer'
+" Plugin 'mattn/emmet-vim.git'
+" Plugin 'othree/html5.vim'
+" Plugin 'hail2u/vim-css3-syntax.git'
+" Plugin 'pangloss/vim-javascript'
+
+" Plugin 'brew.vim'
+
+" Plugin 'iakio/smarty3.vim'
+
+" Plugin 'kshenoy/vim-signature' " 显示marks - 方便自己进行标记和跳转
+" Plugin 'mbbill/undotree'
+" Plugin 'mileszs/ack.vim'
+" Plugin 'sjl/gundo.vim' " edit history, 可以查看回到某个历史状态
+" Plugin 'tpope/vim-abolish.git'
+" Plugin 'tpope/vim-commentary'
+" Plugin 'tpope/vim-cucumber'
+" Plugin 'tpope/vim-fugitive'
+" Plugin 'Shougo/unite.vim'
+" Plugin 'christoomey/vim-tmux-navigator'
+" Plugin 'vim-scripts/mru.vim'
+
+" Plugin 'alvan/vim-closetag' "自动补全html/xml标签
+" Plugin 'tpope/vim-haml' "html
+" Plugin 'Shougo/neocomplcache'
+" Plugin 'gcmt/wildfire.vim'
+" Plugin 'gorodinskiy/vim-coloresque' "html
+" Plugin 'hail2u/vim-css3-syntax' "html
+" Plugin 'lilydjwg/colorizer'
+" Plugin 'mattn/emmet-vim' "html
+" Plugin 'mattn/gist-vim'
+" Plugin 'mattn/webapi-vim'
+" Plugin 'mhinz/vim-signify'
+" Plugin 'othree/html5.vim' "html
+" Plugin 'Chiel92/vim-autoformat'
+" Plugin 'Glench/Vim-Jinja2-Syntax'
+" Plugin 'Raimondi/delimitMate' "自动补全单引号，双引号等
+" Plugin 'Shougo/neosnippet' "snippets
+" Plugin 'Shougo/neosnippet-snippets'
+" Plugin 'Shougo/vimproc.vim' "haskell
+" Plugin 'SirVer/ultisnips' "snippets
+" Plugin 'Twinside/vim-haskellConceal' "haskell
+" Plugin 'Twinside/vim-haskellFold' "haskell
+" Plugin 'Valloric/YouCompleteMe'
+" Plugin 'adinapoli/cumino' "haskell
+" Plugin 'airblade/vim-gitgutter'
+" Plugin 'arnaud-lb/vim-php-namespace' "php
+" Plugin 'artur-shaik/vim-javacomplete2'
+" Plugin 'beyondwords/vim-twig' "php
+" Plugin 'bitc/vim-hdevtools' "haskell
+" Plugin 'bling/vim-bufferline' "buffer
+" Plugin 'briancollins/vim-jst' "javascript
+" Plugin 'bronson/vim-trailing-whitespace' " 快速去行尾空格 [, + <Space>]
+" Plugin 'carlosgaldino/elixir-snippets' "elixir
+" Plugin 'cespare/vim-toml'
+" Plugin 'christoomey/vim-tmux-navigator'    " For tmux navigator Ctrl-hjkl
+" Plugin 'dag/vim3hs' "haskell
+" Plugin 'derekwyatt/vim-sbt' "scala
+" Plugin 'derekwyatt/vim-scala' "scala
+" Plugin 'dyng/ctrlsf.vim' " 类似sublimetext的搜索
+" Plugin 'eagletmt/ghcmod-vim' "haskell
+" Plugin 'eagletmt/neco-ghc' "haskell
+" Plugin 'elixir-lang/vim-elixir' "elixir
+" Plugin 'fatih/vim-go' "go
+" Plugin 'garbas/vim-snipmate' "snippets
+" Plugin 'groenewege/vim-less' "javascript
+" Plugin 'haya14busa/incsearch.vim' " incsearch
+" Plugin 'hdima/python-syntax' "python
+" Plugin 'honza/vim-snippets' "snippets
+" Plugin 'honza/vim-snippets' "snippets
+" Plugin 'jeetsukumaran/vim-buffergator' "buffer
+" Plugin 'jlanzarotta/bufexplorer' "buffer
+" Plugin 'kchmck/vim-coffee-script' "javascript
+" Plugin 'klen/python-mode' "python
+" Plugin 'lukerandall/haskellmode-vim' "haskell
+" Plugin 'maksimr/vim-jsbeautify' "javascript
+" Plugin 'mattreduce/vim-mix' "elixir
+" Plugin 'nelstrom/vim-textobj-rubyblock'
+" Plugin 'othree/yajs.vim' | Plugin 'pangloss/vim-javascript'
+" Plugin 'pangloss/vim-javascript' "javascript
+" Plugin 'python_match.vim' "python
+" Plugin 'pythoncomplete' "python
+" Plugin 'quentindecock/vim-cucumber-align-pipes'
+" Plugin 'rhysd/conflict-marker.vim'
+" Plugin 'rodjek/vim-puppet' "puppet
+" Plugin 'rust-lang/rust.vim'
+" Plugin 'saltstack/salt-vim'
+" Plugin 'shawncplus/phpcomplete.vim' "php
+" Plugin 'spf13/PIV' "php
+" Plugin 'spf14/vim-preview'
+" Plugin 'szw/vim-ctrlspace'
+" Plugin 'tacahiroy/ctrlp-funky'
+" Plugin 'terryma/vim-expand-region' " 选中区块
+" Plugin 'thinca/vim-quickrun'
+" Plugin 'tpope/vim-rails' "ruby
+" Plugin 'travitch/hasksyn' "haskell
+" Plugin 'vim-ruby/vim-ruby'
+" Plugin 'xolox/vim-lua-ftplugin'  "lua
+" Plugin 'xptemplate' "scala
+" Plugin 'yssource/python.vim' "python
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+"}
+" General
+behave xterm
+filetype indent on
+filetype on
+filetype plugin on
+highlight clear LineNr          " Current line number row will have same background color in relative mode
+highlight clear SignColumn      " SignColumn should match background
+syntax on                   " Syntax highlighting
+colorscheme desert
+"highlight clear CursorLineNr    " Remove highlight color from current line number
+
+"set confirm
+"set cursorcolumn " 突出显示当前列
+"set encoding=utf-8                                " Sets the character encoding.
+"set expandtab "将Tab键转换为空格
+"set fileencoding=utf-8                            " Sets the character encoding.
+"set foldcolumn=1 " 设置折叠区域的宽度
+"set foldenable
+"set foldexpr=1 " 设置代码块折叠后显示的行数
+"set foldlevel=1
+"set foldmarker={,}
+"set foldmethod=indent
+"set foldmethod=marker
+"set guifont=Consolas:h12
+"set guifont=Monaco:h9
+"set guifont=YaHei\ Consolas\ Hybrid:h12
+"set guifont=Yahei\ Mono:h12
+"set nrformats
+"set smarttab                                          "指定按一次backspace就删除shiftwidth宽度的空格
+"set switchbuf=usetab,newtab"
+"set t_ti= t_te=  "退出vim后，内容显示在终端屏幕
+"set wildmod=list:longest
+set ambiwidth=double "防止特殊符号无法正常显示
+" set autochdir
+set autoindent
+set t_Co=256                   " 在终端启用256色
+set autoindent                 " Indent at the same level of the previous line
+set autoread                   " 当文件在外部被修改，自动更新该文件
+set autowrite                  " Automatically write a file when leaving a modified buffer
+
+"set relativenumber number " 相对行号: 行号变成相对，可以用 nj/nk 进行跳转
+
+set formatoptions+=m " 如遇Unicode值大于255的文本，不必等到空格再折行
+set formatoptions+=B " 合并两行中文时，不在中间加空格
+set background=dark         " Assume a dark background
+set backspace=2             " enable backspace
+set backspace=indent,eol,start 
+set clipboard=unnamed,unnamedplus
+set completeopt=longest,menu " 让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
+set cursorline                  " Highlight current line
+set expandtab                   " Tabs are spaces, not tabs
+set fileencoding=utf-8
+set fileencodings=ucs-bom,utf-8,gbk,cp936,gb2312,big5,euc-jp,euc-kr,latin1
+set fileformat=unix                                 "设置新文件的<EOL>格式
+set fileformats=unix,mac,dos                        "给出文件的<EOL>格式类型
+set foldmarker={,}
+set foldmethod=marker
+set guifont=courier_new:h10              			 "设置字体:字号（字体名称空格用下划线代替）
+set guioptions-=L       " Left-hand scrollbar is present.
+set guioptions-=T       " Include Toolbar.
+set guioptions-=b       " Bottom scrollbar is present. 
+set guioptions-=m       " Menu bar is present.
+set guioptions-=r       " Right-hand scrollbar is always present.
+set hidden                          " Allow buffer switching without saving
+set history=1000                    " Store a ton of history (default is 20)
+set hlsearch        " highlight search
+set ignorecase
+set incsearch       "在输入要搜索的文字时，实时匹配
+set iskeyword-=#                    " '#' is an end of word designator
+set iskeyword-=-                    " '-' is an end of word designator
+set list "tab is visable
+set magic
+set matchpairs+=<:>             " Match, to be used with %
+set matchtime=2
+set mouse+=a
+set mousehide               " Hide the mouse cursor while typing
+set nobackup
+set noerrorbells
+set nojoinspaces                " Prevents inserting two spaces after punctuation on a join (J)
+set nospell
+set noswapfile                                         "设置不自动换行
+set novisualbell
+set nowrap                      " Do not wrap long lines
+set ruler
+set scrolloff=7
+set selection=exclusive " 修复ctrl+m 多光标操作选择的bug，但是改变了ctrl+v进行字符选中时将包含光标下的字符
+set selectmode-=mouse
+set shiftround
+set shiftwidth=4                " Use indents of 4 spaces
+set shortmess=atI                                     "去掉欢迎界面
+set showcmd
+set showmatch       "开启匹配模式(左右符号匹配)
+set showmode                    " Display the current mode
+set smartindent                                       "启用智能对齐方式
+set smarttab
+set softtabstop=4               " Let backspace delete indent
+set splitbelow                  " Puts new split windows to the bottom of the current
+set splitright                  " Puts new vsplit windows to the right of the current
+set t_Co=256                   " 在终端启用256色
+set tabpagemax=15               " Only show 15 tabs
+set tabstop=4                   " An indentation every four columns
+set title " Change the terminal's title
+set tm=500
+set ttyfast
+set vb t_vb=                                "关闭提示音
+set viewoptions=folds,options,cursor,unix,slash
+set viminfo^=%
+set virtualedit=onemore             " Allow for cursor beyond last character
+set whichwrap+=<,>,[,],h,l " backspace and cursor keys wrap to previous/next line
+set whichwrap=b,s,<,>,[,]
+set wildignore=*.swp,*.bak,*.pyc,*.class
+set wildmenu " 增强模式中的命令行自动完成操作
+set winaltkeys=no                                      "Alt组合键不映射到菜单上
+set wrap                                               "设置自动换行
+set wildignore=*.o,*~,*.pyc,*.class " Ignore compiled files
+set ruler                   " Show the ruler
+set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " A ruler on steroids
+set showcmd                 " Show partial commands in status line and
+
+set backspace=indent,eol,start  " Backspace for dummies
+set linespace=0                 " No extra spaces between rows
+set showmatch                   " Show matching brackets/parenthesis
+set incsearch                   " Find as you type search
+set hlsearch                    " Highlight search terms
+set winminheight=0              " Windows can be 0 line high
+set ignorecase                  " Case insensitive search
+set smartcase                   " Case sensitive when uc present
+set wildmenu                    " Show list instead of just completing
+set wildmode=list:longest,full  " Command <Tab> completion, list matches, then longest common part, then all.
+set whichwrap=b,s,h,l,<,>,[,]   " Backspace and cursor keys wrap too
+set scrolljump=5                " Lines to scroll when cursor leaves screen
+set scrolloff=3                 " Minimum lines to keep above and below cursor
+set foldenable                  " Auto fold code
+set foldmarker={,}
+set list "显示Tab符
+set listchars=tab:>-,trail:.,extends:#,nbsp:%
+set listchars=tab:\|\ ,trail:.,extends:>,precedes:<
+
+" tags
+set tags=./tags;
+set tags+=/usr/include/tags
+
+" Let
+let &cdpath = ',' . substitute(substitute($CDPATH, '[, ]', '\\\0', 'g'), ':', ',', 'g')
+let g:Powerline_symbols = 'fancy'
+
+" highlight
+" for error highlight，防止错误整行标红导致看不清
+highlight clear SpellBad
+highlight SpellBad term=standout ctermfg=1 term=underline cterm=underline
+highlight clear SpellCap
+highlight SpellCap term=underline cterm=underline
+highlight clear SpellRare
+highlight SpellRare term=underline cterm=underline
+highlight clear SpellLocal
+highlight SpellLocal term=underline cterm=underline
+
+" statusline
+
+set laststatus=2
+
+set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+set statusline+=%w%h%m%r                 " Options
+set statusline+=\ [%{&ff}/%Y]            " Filetype
+set statusline+=\ [%{getcwd()}]          " Current dir
+set statusline=%<%f\                     " Filename
+set statusline+=%{fugitive#statusline()} " Git Hotness
+set statusline=%<%F%m%r%h%w%=\ %-10(%{&ff}%)%-20(%y%)[%1*%M%*%n%R%H]\%-10(%3l,%02c%03V%)\%P
+set statusline=%<%f\ %h%m%r%=%k[%{(&fenc==\"\")?&enc:&fenc}%{(&bomb?\",BOM\":\"\")}9;*&]\ %-14.(%l,%c%V%)\ %P
+
+" molakai
+if isdirectory(expand("~/.vim/bundle/molokai/"))
+    colorscheme molokai
+endif
+
+" vim-arline
+if isdirectory(expand("~/.vim/bundle/vim-airline/"))
+    " Using a Theme :AirlineTheme <theme>` to set the theme
+    let g:airline_theme='molokai'
+endif
+
+" 调整光标的形状
+if exists('$ITERM_PROFILE____')
+	if exists('$TMUX')
+		"let &amp;t_SI = "<Esc>[3 q"
+	"	let &amp;t_EI = "<Esc>[0 q"
+	else
+	"	let &amp;t_SI = "<Esc>]50;CursorShape=1x7"
+	"	let &amp;t_EI = "<Esc>]50;CursorShape=0x7"
+	endif
+end
+
+
+"Mapping
+" not use
+"let mapleader=","   " 修改leader键
+" auto jump to end of select
+" nnoremap <leader>gt :execute 'tabnext ' . g:last_active_tab<CR>
+" nnoremap <silent> <c-o> :execute 'tabnext ' . g:last_active_tab<CR>
+" nnoremap <silent> p p`]
+" select block
+" vnoremap <silent> <c-o> :execute 'tabnext ' . g:last_active_tab<CR>
+" vnoremap <silent> p p`]
+" vnoremap <silent> y y`]
+" w!! to sudo & write a file
+"map \c i/* <Esc>A  */<Esc>
+"nmap <leader>jt <Esc>:%!python -m json.tool<CR><Esc>:set filetype=json<CR>
+"nnoremap / /\v
+"nnoremap <F10> :ClangFormatAutoToggle<CR>"
+"nnoremap <F5> :set list! list?<CR>
+"nnoremap <s-k> :tabprevious<CR>
+"nnoremap <s-l> :bnext<CR>
+"noremap H ^
+"noremap L $
+"vnoremap / /\v
+
+" combile
+function! Compile()
+    exec "w"
+
+    if &filetype == "python"
+        exec "!python %"
+    endif
+
+    if &filetype == "javascript"
+        exec "!node %"
+    endif 
+
+    if &filetype == 'c'
+        exec "!g++ % -o %<"
+        exec "!g++ % -o test"
+        exec  "!./test"
+    elseif &filetype == 'cpp'
+        exec "!g++ % -o test"
+        exec "!./test"
+    elseif &filetype == 'java'
+        exec "!javac %"
+        exec "!java %<"
+    elseif &filetype == 'sh'
+        exec "!./%"
+    elseif &filetype == 'php'
+        exec "!php -f %"
+    endif
+endfun
+
+" Zoom / Restore window
+function! s:ZoomToggle() abort
+    if exists('t:zoomed') && t:zoomed
+        execute t:zoom_winrestcmd
+        let t:zoomed = 0
+    else
+        let t:zoom_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+        let t:zoomed = 1
+    endif
+endfunction
+command! ZoomToggle call s:ZoomToggle()
+
+" toggle fold
+let g:FoldMethod = 0
+fun! FoldToggle()
+    if g:FoldMethod == 0
+        exe "normal! zM"
+        let g:FoldMethod = 1
+    else
+        exe "normal! zR"
+        let g:FoldMethod = 0
+    endif
+endfun
+" toggle numbe
+function! NumberToggle()
+  if(&relativenumber == &number)
+    set relativenumber! number!
+  elseif(&number)
+    set number!
+  else
+    set relativenumber!
+  endif
+  set number?
+endfunc
+
+" toggle mouse
+function! MouseToggle()
+  if(&mouse == 'a')
+    set mouse-=a  paste
+  else
+    set mouse=a nopaste
+  endif
+  set mouse?
+endfunc
+
+" quick cmkline
+
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-j> <t_kd>
+cnoremap <C-k> <t_ku>
+cnoremap w!! w !sudo tee >/dev/null %
+
+" map in insert mode
+"-------------------------------------------------------------------------------------
+inoremap <C-h> <c-o>h
+inoremap <C-j> <c-o>gj
+inoremap <C-k> <c-o>gk
+inoremap <C-l> <c-o>l
+inoremap <C-t> <Esc>:tabnew<CR>
+inoremap <Down> <Nop>
+inoremap <Left> <Nop>
+inoremap <Right> <Nop>
+inoremap <Up> <Nop>
+nnoremap <Down> <Nop>
+
+inoremap kj <Esc>
+imap <F7> date: <C-R>=strftime("%Y-%m-%d %H:%M:%S")<CR>
+nnoremap <F7> idate: <C-R>=strftime("%Y-%m-%d %H:%M:%S")<CR><Esc>
+imap <silent><F2> <Esc>:TagbarClose<CR>:NERDTreeToggle<CR><C-w><C-l>a
+imap <silent><F3> <Esc>:NERDTreeClose<CR>:TagbarToggle<CR><C-w><C-l>a
+imap <silent><F4> <Esc>:set wrap! wrap?<CR>a
+imap <silent><F5> <Esc>:call NumberToggle()<CR>a
+imap <silent><F8> <Esc>:call MouseToggle()<CR>a
+imap <silent><F9> <Esc>:call Compile()<CR>
+" }
+" map in normal mode
+nnoremap ' `
+nnoremap ; :
+nnoremap <C-c> <Nop>
+" nnoremap <C-a> ggVG
+nnoremap <C-e> 2<C-e>
+" Smart way to move between windows
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-h> <C-w>h
+map <C-l> <C-w>l
+" }
+
+nnoremap <C-y> 2<C-y>
+nnoremap <Esc><Esc> :nohlsearch<CR>
+
+
+map <silent><F2> <Esc>:TagbarClose<CR>:NERDTreeToggle<CR>
+map <silent><F3> <Esc>:NERDTreeClose<CR>:TagbarToggle<CR>
+map <silent><F4> <Esc>:set wrap! wrap?<CR>
+map <silent><F5> <Esc>:call NumberToggle()<CR>
+map <silent><F8> <Esc>:call MouseToggle()<CR>
+map <silent><F9> <Esc>:call Compile()<CR>
+
+
+map <silent>tn :call NumberToggle()<CR>
+map <silent>tm :call MouseToggle()<CR>
+map <silent>tt :TagbarToggle<CR>
+map <silent>tf :NERDTreeToggle<CR>
+map <silent>tw :set wrap! wrap?<CR>
+
+
+" Go to home and end using capitalized directions
+noremap H ^
+noremap L $
+
+" y$ -> Y Make Y behave like other capitals
+map Y y$
+
+
+" select all
+map <Leader>sa ggVG"
+
+" select block
+nnoremap <leader>v V`}
+" Keep search pattern at the center of the screen
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+nnoremap <silent> g* g*zz
+nnoremap <silent> <Leader>z :ZoomToggle<CR>
+
+" remap U to <C-r> for easier redo
+nnoremap U <C-r>
+
+" tab map
+map <leader>zz :call FoldToggle()<CR>
+map <Leader>0 :tablast<CR>
+map <Leader>1 1gt
+map <Leader>2 2gt
+map <Leader>3 3gt
+map <Leader>4 4gt
+map <Leader>5 5gt
+map <Leader>6 6gt
+map <Leader>7 7gt
+map <Leader>8 8gt
+map <Leader>9 9gt
+map <Leader>q :q<CR>
+map <Leader>td :tabclose<CR>
+map <Leader>te :tabedit 
+map <Leader>th :tabfirst<CR>
+map <Leader>tl :tablast<CR>
+map <Leader>tn :tabnext<CR>
+map <Leader>v V`
+map <Leader>w :w<CR>
+map <Leader>wq :wq<CR>
+map <Left> :bp<CR>
+map <Right> :bn<CR>
+map <S-h> :bprevious<CR>
+map <S-l> :tabnext<CR>
+map <Space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+map <Up> <Nop>
+map Q gq
+map [b :bp<CR>
+map ]b :bn<CR>
+map ` '
+map cM :%s/\r$//g<CR>:noh<CR>
+map cS :%s/\s\+$//g<CR>:noh<CR>
+
+" map in visual mode
+vnoremap < <gv
+vnoremap <Leader>y "+y
+vnoremap <S-tab> <gv
+vnoremap <Tab> >gv
+vnoremap > >gv
+vnoremap _g y:exe "grep /" . escape(@", ’\\/’) . "/ *.c *.h"<CR>")
+
+if has("unix")
+    let s:uname = system("uname")
+    if s:uname == "Darwin\n"
+        nmap <leader>a ggVG
+    endif
+endif
+
+source ~/.vim/align.vim
+source ~/.vim/autocmd.vim
+source ~/.vim/buffer.vim
+source ~/.vim/clang-format.vim
+source ~/.vim/copy.vim
+source ~/.vim/ctrlp.vim
+source ~/.vim/git.vim
+source ~/.vim/go.vim
+source ~/.vim/indent.vim
+source ~/.vim/mark.vim
+source ~/.vim/motion.vim
+source ~/.vim/neocomplete.vim
+source ~/.vim/nerdcommenter.vim
+source ~/.vim/nerdtree.vim
+source ~/.vim/session.vim
+source ~/.vim/snipmate.vim
+source ~/.vim/syntastic.vim
+source ~/.vim/tmux.vim
+source ~/.vim/cscope.vim
+
+if filereadable("tags.vim")
+    source ~/.vim/tags.vim
+endif
