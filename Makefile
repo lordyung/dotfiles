@@ -1,4 +1,4 @@
-SUBDIR=bashrc bin gitconfig gnupg ossutilconfig pip qshell quiltrc ShadowsocksX-NG vim zsh tmux ssh/config.default
+SUBDIR=bashrc bin gitconfig gnupg ossutilconfig pip qshell quiltrc vim zsh tmux ssh/config.default
 PWD=$(shell pwd)
 
 RM=rm -f
