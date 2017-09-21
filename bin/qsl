@@ -1,9 +1,0 @@
-#!/bin/bash
-
-if [ $#  = 1 ]; then
-    echo http://ot2jmekaj.bkt.clouddn.com/$1
-elif [ $# = 2 ];then
-    echo http://$(qshell domains $1)/$2
-else
-    echo Usuage: qsl \(bucket\) [key]
-fi

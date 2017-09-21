@@ -1,3 +1,0 @@
-#!/bin/bash
-
-qshell fput distfiles $1 $1
