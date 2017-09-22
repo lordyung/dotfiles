@@ -5,15 +5,15 @@ export EDITOR='vim';
 export HISTCONTROL='ignoreboth';
 export HISTFILESIZE="${HISTSIZE}";
 export HISTSIZE='32768';
-export LANG='en_US.UTF-8';
-export LC_ALL='en_US.UTF-8';
 export LESS_TERMCAP_md="${yellow}";
 export MANPAGER='less -X';
 export NODE_REPL_HISTORY=~/.node_history;
 export NODE_REPL_HISTORY_SIZE='32768';
 export NODE_REPL_MODE='sloppy';
 export PYTHONIOENCODING='UTF-8';
-export prefix=/usr/local
+
+export LANG='en_US.UTF-8';
+export LC_ALL='en_US.UTF-8';
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US:en
 
@@ -22,11 +22,13 @@ export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles
 
 export HOMEBREW_NO_AUTO_UPDATE=true
 
-export PATH=/usr/local/Qt-5.6.2/bin:~/.bin:/opt/local/sbin:/opt/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export PATH=~/.bin:/opt/local/sbin:/opt/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 export MANPATH=/opt/local/share/man:$MANPATH
 # export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 export GOPATH=$HOME/.go
+
+export FORCE_UNSAFE_CONFIGURE=1
 
 # manpages colors
 export LESS_TERMCAP_mb=$(printf '\e[01;31m') # enter blinking mode
