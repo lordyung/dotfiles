@@ -1,16 +1,22 @@
 #!/bin/bash
 
+# qshell fput <Bucket> <Key> <LocalFile>
+
 if [ $#  = 1  ]; then
-    url=ot2jmekaj.bkt.clouddn.com/$1
+    Bucket=distfiles
+    Key=$1
+    LocalFile=$1
 elif [ $# = 2  ];then
-    url=$(qshell domains $1)/$2
+    Bucket=$1
+    Key=$2
+    LocalFile=$2
 else
     echo Usuage: qs \(bucket\) [key]
+    exit
 fi
+
+url=$(qshell domains ${Bucket})/${Key}
 
 wget -T 15 --tries=1 --spider $url > /dev/null 2>&1 && echo $url && exit
 
-qshell fput distfiles $1 $1 && exit
-echo http://ot2jmekaj.bkt.clouddn.com/$1 
-
-
+qshell fput $Bucket $Key $LocalFile  && echo $url
