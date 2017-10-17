@@ -3,7 +3,7 @@
 ## repo default configuration
 ##
 from __future__ import print_function
-REPO_URL = 'git@192.168.0.8:projects/repo'
+REPO_URL = 'https://github.com/tinalinux/repo.git'
 REPO_REV = 'stable'
 
 # Copyright (C) 2008 Google Inc.
