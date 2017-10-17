@@ -39,5 +39,16 @@ sudo systemctl start docker
 sudo groupadd docker
 sudo usermod -aG docker $USER
 
-sudo sed -i "/ExecStart/c ExecStart=/usr/bin/dockerd –registry-mirror=https://18sjzo7q.mirror.aliyuncs.com -H fd://" \
-    /etc/systemd/system/multi-user.target.wants/docker.service
+# sudo sed -i "/ExecStart/c ExecStart=/usr/bin/dockerd –registry-mirror=https://18sjzo7q.mirror.aliyuncs.com -H fd://" \
+    # /etc/systemd/system/multi-user.target.wants/docker.service
+
+
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+      "registry-mirrors": ["https://18sjzo7q.mirror.aliyuncs.com"]
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+sudo systemctl status restart docker
