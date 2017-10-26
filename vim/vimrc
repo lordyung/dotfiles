@@ -32,6 +32,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-scripts/ShowMarks'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'christoomey/vim-system-copy'
+Plugin 'fatih/vim-go'
 
 " Plugin 'mileszs/ack.vim'
 " Plugin 'brookhong/cscope.vim'
