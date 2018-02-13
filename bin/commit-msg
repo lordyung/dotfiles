@@ -1,0 +1,6 @@
+#!/bin/bash
+if [ -d .git ];then
+    scp code.lordyung.com:hooks/commit-msg .git/hooks/
+else
+    echo 'Not in git root directory!'
+fi

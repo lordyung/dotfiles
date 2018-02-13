@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# if [ -f README.md ];then
+    # echo "existed README.md" && exit
+# fi
+
+repo=$1
+name=$2
+subdir=$3
+
+url=/tmp/${name}-url.md
+title=/tmp/${name}-title.md
+size=/tmp/${name}.size.md
+
+if [ $# -eq 3 ]; then
+    readme_file=$3/README.md
+    subdir=$3/
+elif [ $# -eq 2 ]; then
+    readme_file=README.md
+    subdir=
+else
+    echo "Usuage: readme [repo] [title] (subdir)" && exit
+fi
+
+# find -type -d   2>/dev/null | sed "s|^|(https://code.aliyun.com/${repo}/${name}/blob/master/|g" | sed 's/$/)/g' > ${url}
+ find -maxdepth 1 -type d |sed '/.git/d'| sed '/^.$/d' |sed 's|^./||g' \
+    | sed "s|^|(https://code.aliyun.com/${repo}/${name}/blob/master/${subdir}|g" | sed 's/$/)/g'  > ${url}
+ls *.md  2>/dev/null \
+    | sed "s|^|(https://code.aliyun.com/${repo}/${name}/blob/master/${subdir}|g" | sed 's/$/)/g' >> ${url}
+ls *.pdf 2>/dev/null \
+    | sed "s|^|(https://code.aliyun.com/${repo}/${name}/raw/master/${subdir}|g" | sed 's/$/)/g' >> ${url}
+ls *.txt 2>/dev/null \
+    | sed "s|^|(https://code.aliyun.com/${repo}/${name}/blob/master/${subdir}|g" | sed 's/$/)/g' >> ${url}
+
+# cat ${url}
+
+find  -maxdepth 1 -type d |sed '/.git/d'| sed '/^.$/d' |sed 's|^./||g' \
+    | sed 's|^|* [|g' |sed 's|$|]|g' > ${title}
+ls *.md  2>/dev/null  \
+    | sed 's|^|* [|g' |sed 's|$|]|g' >> ${title}
+ls *.pdf  2>/dev/null  \
+    | sed 's|^|* [|g' |sed 's|$|]|g' >> ${title}
+ls *.txt  2>/dev/null  \
+     sed 's|^|* [|g' |sed 's|$|]|g' >> ${title}
+
+# cat ${title}
+
+find  -maxdepth 1 -type d |sed '/.git/d'| sed '/^.$/d' |sed 's|^./||g' | xargs du -lh | awk '{print $1}' > ${size}
+ls -lh  *.md 2>/dev/null | awk '{print $5}' >> ${size}
+ls -lh  *.pdf 2>/dev/null | awk '{print $5}'>> ${size}
+ls -lh  *.txt 2>/dev/null | awk '{print $5}'>> ${size}
+
+paste ${title} ${url} ${size} |sed 's/\t//1' | sed 's/\t/ .......... /1' | sort | sed "1i # \`${name}\`\n" | tee README.md
+
+rm -f ${title} ${url} ${size}

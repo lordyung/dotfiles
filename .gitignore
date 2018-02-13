@@ -1,0 +1,3 @@
+.DS_Store
+*.log
+nginx/etc/gerrit_password

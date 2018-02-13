@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# Quick search in a directory for a string ($@).
+#
+set -e
+hash ack 2>/dev/null || {
+if [ $(check_distro) = 'Ubuntu' ]; then
+    sudo apt-get install -y ack-grep || exit
+elif [ $(check_distro) = 'RedHat' ]; then
+    sudo yum install -y ack || exit
+elif [ $(check_distro) = 'Darwin' ]; then
+    brew install ack || exit
+else
+    echo "Don't Support this system." && exit
+fi
+}
+# use -iru to search directories ack usually ignores (like .git)
+if [ -x /usr/bin/ack-grep ]; then
+    ack-grep "$@"
+else
+    /usr/local/bin/ack  "$@"
+fi

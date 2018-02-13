@@ -1,0 +1,3 @@
+#!/bin/bash
+
+grep --color=always $1 ~/.dotfiles/lib/distfiles.txt | sed 's|^|http://mirrors.ustc.edu.cn/gentoo/distfiles/|g'

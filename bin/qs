@@ -1,0 +1,28 @@
+#!/bin/bash
+if [ $#  -le 1  ]; then
+    Bucket=distfiles
+    Key=$1
+    LocalFile=$1
+elif [ $# = 2  ];then
+    Bucket=$1
+    Key=$2
+    LocalFile=$2
+else
+    echo Usuage: qs \(bucket\) [key]
+    exit
+fi
+Domain=$(qshell domains $Bucket)
+
+if [ $#  -lt 1  ]; then
+    for file in `qshell listbucket $Bucket /tmp/list &&cat /tmp/list |awk '{print $1}'`
+    do
+        echo $Domain/$file
+    done
+elif  [ $#  -ge 1  ]; then
+    for file in `qshell listbucket $Bucket /tmp/list &&cat /tmp/list |awk '{print $1}'`
+    do
+        echo $Domain/$file |grep $Key
+    done
+fi
+
+
