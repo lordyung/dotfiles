@@ -595,6 +595,7 @@ if [ $(uname) = "Darwin" ]; then
 
     alias ss=proxychains4
     alias plistbuddy="/usr/libexec/PlistBuddy" # PlistBuddy alias, because sometimes `defaults` just doesn’t cut it
+    alias ctags="/usr/local/bin/ctags"
 
     # brew
     alias brwe=brew  #typos
