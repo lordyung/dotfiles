@@ -485,11 +485,6 @@ inoremap <C-j> <c-o>gj
 inoremap <C-k> <c-o>gk
 inoremap <C-l> <c-o>l
 inoremap <C-t> <Esc>:tabnew<CR>
-inoremap <Down> <Nop>
-inoremap <Left> <Nop>
-inoremap <Right> <Nop>
-inoremap <Up> <Nop>
-nnoremap <Down> <Nop>
 
 inoremap kj <Esc>
 imap <F7> date: <C-R>=strftime("%Y-%m-%d %H:%M:%S")<CR>
@@ -504,7 +499,6 @@ imap <silent><F9> <Esc>:call Compile()<CR>
 " map in normal mode
 nnoremap ' `
 nnoremap ; :
-nnoremap <C-c> <Nop>
 " nnoremap <C-a> ggVG
 nnoremap <C-e> 2<C-e>
 " Smart way to move between windows
@@ -578,12 +572,9 @@ map <Leader>tn :tabnext<CR>
 map <Leader>v V`
 map <Leader>w :w<CR>
 map <Leader>wq :wq<CR>
-map <Left> :bp<CR>
-map <Right> :bn<CR>
 map <S-h> :bprevious<CR>
 map <S-l> :tabnext<CR>
 map <Space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
-map <Up> <Nop>
 map Q gq
 map [b :bp<CR>
 map ]b :bn<CR>
