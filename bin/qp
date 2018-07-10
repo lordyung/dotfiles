@@ -2,21 +2,25 @@
 
 # qshell fput <Bucket> <Key> <LocalFile>
 
+Bucket=distfiles
 if [ $#  = 1  ]; then
-    Bucket=distfiles
-    Key=$1
     LocalFile=$1
-elif [ $# = 2  ];then
-    Bucket=$1
-    Key=$2
-    LocalFile=$2
+    Key=$1
+elif [ $#  = 2  ]; then
+    LocalFile=$1
+    Prefix=$2
+    Key=$Prefix/$1
 else
-    echo Usuage: qs \(bucket\) [key]
+    echo Usuage: qp [Key] \(Prefix\)
     exit
 fi
 
-url=$(qshell domains ${Bucket})/${Key}
+url=http://ot2jmekaj.bkt.clouddn.com/`qshell urlencode $Key`
 
-wget -T 15 --tries=1 --spider $url > /dev/null 2>&1 && echo $url && exit
+# 测试是否存在此文件
+wget -T 15 --tries=1 --spider $url > /dev/null 2>&1
+[ $? -eq 0 ] && echo $url && hash pbcopy > /dev/null 2>&1  && echo -n $url | pbcopy  && exit  # 将内容复制到Mac剪贴板
 
-qshell fput $Bucket $Key $LocalFile  && echo $url
+# 将文件推送到Bucket
+qshell fput $Bucket $Key $LocalFile
+[ $? -eq 0 ] && echo $url && hash pbcopy > /dev/null 2>&1  && echo -n $url | pbcopy  && exit  # 将内容复制到Mac剪贴板
