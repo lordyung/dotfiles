@@ -1,10 +1,12 @@
 # a script to run download and run qshell in deferent platform.
 #!/bin/bash
 
-if [ `uname -s` = "Darwin" ]; then
-    qshell-darwin $@
-elif [ `uname -s` = "Linux" ]; then
-    qshell-linux $@
+if [ `uname -s` = "Darwin" -a `uname -m` = "x86_64" ]; then
+    qshell-darwin-x64 $@
+elif [ `uname -s` = "Linux" -a `uname -m` = "x86_64" ]; then
+    qshell-linux-x64 $@
+elif [ `uname -s` = "Linux" -a `uname -m` = "i686" ]; then
+    qshell-linux-x86 $@
 else
     echo "Don't Support this system."
 fi
