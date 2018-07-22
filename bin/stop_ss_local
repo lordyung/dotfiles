@@ -1,0 +1,5 @@
+#!/bin/sh
+
+#  stop_ss_local.sh
+
+launchctl unload "$HOME/Library/LaunchAgents/com.lordyung.shadowsocks.plist"

@@ -1,0 +1,8 @@
+{
+    "server":"lordyung.com",
+    "server_port":9500,
+    "local_port":1080,
+    "password":"ssjiejin264",
+    "timeout":600,
+    "method":"aes-256-cfb"
+}
