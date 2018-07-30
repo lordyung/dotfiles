@@ -113,6 +113,7 @@ if [ -d /opt/jdk1.8.0_152 ]; then
 fi
 
 # alias
+alias cf='clang-format -i'
 alias ag='ag -f --hidden'
 alias cls='clear'
 alias cp='cp -v'
@@ -121,6 +122,7 @@ alias h="history"
 alias j="jobs"
 alias path='echo -e ${PATH//:/\\n}' # Print each PATH entry on a separate line
 # alias pc="ALL_PROXY=socks5://127.0.0.1:1080 proxychains4" # 为Macos设置终端代理
+alias proxy='export https_proxy=http://127.0.0.1:6152;export http_proxy=http://127.0.0.1:6152;export all_proxy=socks5://127.0.0.1:6153'
 alias rg="ranger"
 alias ungz="gunzip -k"
 alias vi='vim'
@@ -603,8 +605,11 @@ if [ $(uname) = "Darwin" ]; then
     alias ci="brew cask install"
     alias cf="brew cask info"
     alias cs="brew cask search"
+    alias cask='brew cask'
     alias subl='open -a Sublime'
     alias spotoff="sudo mdutil -a -i off" # Disable Spotlight
+
+    alias mount_ntfs='/usr/local/sbin/mount_ntfs'
 
     #alias brew_update="brew -v update; brew upgrade --force-bottle --cleanup; brew cleanup; brew cask cleanup; brew prune; brew doctor; npm-check -g -u"
     alias update_brew_npm_gem='brew_update; npm install npm -g; npm update -g; sudo gem update --system; sudo gem update --no-document'
