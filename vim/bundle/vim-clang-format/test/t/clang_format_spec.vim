@@ -3,12 +3,12 @@
 
 " helpers "{{{
 " clang-format detection
-function! s:detect_clang_format()
+function! s:detect_clang_format() abort
     if $CLANG_FORMAT !=# '' && executable($CLANG_FORMAT)
         return $CLANG_FORMAT
     endif
 
-    for suffix in ['-HEAD', '-3.8', '-3.7', '-3.6', '-3.5', '-3.4', '']
+    for suffix in ['-HEAD', '-5.0', '-4.0', '-3.8', '-3.7', '-3.6', '-3.5', '-3.4', '']
         let c = 'clang-format' . suffix
         if executable(c)
             return c
@@ -18,40 +18,53 @@ function! s:detect_clang_format()
 endfunction
 let g:clang_format#command = s:detect_clang_format()
 
-function! Chomp(s)
+function! Chomp(s) abort
     return a:s =~# '\n$'
                 \ ? a:s[0:len(a:s)-2]
                 \ : a:s
 endfunction
 
-function! ChompHead(s)
+function! ChompHead(s) abort
     return a:s =~# '^\n'
                 \ ? a:s[1:len(a:s)-1]
                 \ : a:s
 endfunction
 
-function! GetBuffer()
+function! GetBuffer() abort
     return join(getline(1, '$'), "\n")
 endfunction
 
-function! ClangFormat(line1, line2, ...)
-    let opt = printf(" -lines=%d:%d -style='{BasedOnStyle: Google, IndentWidth: %d, UseTab: %s}' ", a:line1, a:line2, &l:shiftwidth, &l:expandtab==1 ? "false" : "true")
-    let file = a:0 == 0 ? 'test.cpp' : a:1
-    let cmd = g:clang_format#command.opt.'./'.s:root_dir.'t/' . file . ' --'
+function! ClangFormat(line1, line2, ...) abort
+    let opt = printf("-lines=%d:%d '-style={BasedOnStyle: Google, IndentWidth: %d, UseTab: %s", a:line1, a:line2, &l:shiftwidth, &l:expandtab==1 ? "false" : "true")
+    let file = 'test.cpp'
+
+    for a in a:000
+        if a =~# '^test\.\w\+$'
+            let file = a
+        else
+            let opt .= a
+        endif
+    endfor
+    let opt .= "}'"
+
+    let cmd = printf('%s %s ./t/%s --', g:clang_format#command, opt, file)
+    let result = Chomp(system(cmd))
+    if v:shell_error
+        throw "Error on system(): clang-format exited with non-zero.\nCommand: " . cmd . "\nOutput: " . result
+    endif
     return Chomp(system(cmd))
 endfunction
 "}}}
 
 " setup {{{
-let s:root_dir = ChompHead(Chomp(system('git rev-parse --show-cdup')))
-execute 'set' 'rtp +=./'.s:root_dir
+let s:root_dir = resolve(getcwd() . '/..')
+execute 'set' 'rtp +=' . s:root_dir
 
-set rtp +=~/.vim/bundle/vim-operator-user
 runtime! plugin/clang_format.vim
 
 call vspec#customize_matcher('to_be_empty', function('empty'))
 
-function! RaisesException(cmd)
+function! RaisesException(cmd) abort
     try
         execute a:cmd
         return 0
@@ -104,7 +117,7 @@ end
 "}}}
 
 " test for clang_format#format() {{{
-function! s:expect_the_same_output(line1, line2)
+function! s:expect_the_same_output(line1, line2) abort
     Expect clang_format#format(a:line1, a:line2) ==# ClangFormat(a:line1, a:line2)
 endfunction
 
@@ -113,7 +126,7 @@ describe 'clang_format#format()'
     before
         let g:clang_format#detect_style_file = 0
         new
-        execute 'silent' 'edit!' './'.s:root_dir.'t/test.cpp'
+        execute 'silent' 'edit!' './t/test.cpp'
     end
 
     after
@@ -151,18 +164,33 @@ describe 'clang_format#format()'
         Expect pos == getpos('.')
     end
 
-    it 'formats following g:clang_format#style_options'
-        let saved = [g:clang_format#style_options, &expandtab, &shiftwidth]
-        try
+    describe 'g:clang_format#style_options'
+        before
+            let g:clang_format#detect_style_file = 0
+            new
+            execute 'silent' 'edit!' './t/test.cpp'
+
+            let s:saved_styles = [g:clang_format#style_options, &expandtab, &shiftwidth]
             set expandtab
             set shiftwidth=4
+        end
+
+        after
+            close!
+            let [g:clang_format#style_options, &expandtab, &shiftwidth] = s:saved_styles
+        end
+
+        it 'customizes code styles'
             let g:clang_format#style_options = {'UseTab' : 'false', 'IndentWidth' : 4}
             call s:expect_the_same_output(1, line('$'))
-        finally
-            let g:clang_format#style_options = saved[0]
-            let &expandtab = saved[1]
-            let &shiftwidth = saved[2]
-        endtry
+        end
+
+        it 'can contain v:true/v:false'
+            if exists('v:false')
+                let g:clang_format#style_options = {'UseTab' : v:false, 'IndentWidth' : 4}
+                call s:expect_the_same_output(1, line('$'))
+            endif
+        end
     end
 
     it 'ensures to fix issue #38'
@@ -189,7 +217,7 @@ describe 'clang_format#replace()'
     before
         let g:clang_format#detect_style_file = 0
         new
-        execute 'silent' 'edit!' './'.s:root_dir.'t/test.cpp'
+        execute 'silent' 'edit!' './t/test.cpp'
         let s:cmd_tmp = g:clang_format#command
     end
 
@@ -204,7 +232,7 @@ describe 'clang_format#replace()'
     end
 
     it 'throws an error when command is not found'
-        let g:clang_format#command = './' . s:root_dir . 't/clang-format-dummy.sh'
+        let g:clang_format#command = './t/clang-format-dummy.sh'
         Expect "call clang_format#replace(1, line('$'))" to_throw_exception
     end
 end
@@ -216,7 +244,7 @@ describe '<Plug>(operator-clang-format)'
     before
         let g:clang_format#detect_style_file = 0
         new
-        execute 'silent' 'edit!' './'.s:root_dir.'t/test.cpp'
+        execute 'silent' 'edit!' './t/test.cpp'
         map x <Plug>(operator-clang-format)
     end
 
@@ -259,7 +287,7 @@ describe ':ClangFormat'
         before
             let g:clang_format#detect_style_file = 0
             new
-            execute 'silent' 'edit!' './'.s:root_dir.'t/test.cpp'
+            execute 'silent' 'edit!' './t/test.cpp'
         end
 
         after
@@ -291,6 +319,13 @@ describe ':ClangFormat'
             Expect pos == getpos('.')
         end
 
+        it 'maintains screen position while formatting'
+            execute 'normal!' "3\<C-e>"
+            let prev = line('w0')
+            ClangFormat
+            let current = line('w0')
+            Expect prev ==# current
+        end
     end
 
     describe 'with filetype javascript'
@@ -298,7 +333,7 @@ describe ':ClangFormat'
         before
             let g:clang_format#detect_style_file = 0
             new
-            execute 'silent' 'edit!' './'.s:root_dir.'t/test.js'
+            execute 'silent' 'edit!' './t/test.js'
         end
 
         after
@@ -307,6 +342,31 @@ describe ':ClangFormat'
 
         it 'formats the whole code in normal mode'
             let by_clang_format_command = ClangFormat(1, line('$'), 'test.js')
+            ClangFormat
+            let buffer = GetBuffer()
+            Expect by_clang_format_command ==# buffer
+        end
+
+    end
+
+    describe 'hard tab'
+
+        before
+            let g:clang_format#detect_style_file = 0
+            let s:saved_expandtab = &expandtab
+            let s:saved_shiftwidth = &shiftwidth
+            set noexpandtab shiftwidth=8
+            new
+            execute 'silent' 'edit!' './t/test.cpp'
+        end
+
+        after
+            let &expandtab = s:saved_expandtab
+            let &shiftwidth = s:saved_shiftwidth
+        end
+
+        it 'does not break formatting'
+            let by_clang_format_command = ClangFormat(1, line('$'), 'test.cpp')
             ClangFormat
             let buffer = GetBuffer()
             Expect by_clang_format_command ==# buffer
@@ -322,7 +382,7 @@ describe 'g:clang_format#auto_format'
     before
         let g:clang_format#auto_format = 1
         new
-        execute 'silent' 'edit!' './'.s:root_dir.'t/test.cpp'
+        execute 'silent' 'edit!' './t/test.cpp'
     end
 
     after
@@ -330,7 +390,7 @@ describe 'g:clang_format#auto_format'
     end
 
     it 'formats a current buffer on BufWritePre if the value is 1'
-        SKIP because somehow BufWritePre event isn't fired
+        SKIP 'because somehow BufWritePre event isn''t fired'
         let formatted = clang_format#format(1, line('$'))
         doautocmd BufWritePre
         let auto_formatted = join(getline(1, line('$')), "\n")
@@ -345,7 +405,7 @@ describe 'g:clang_format#auto_format_on_insert_leave'
     before
         let g:clang_format#auto_format_on_insert_leave = 1
         new
-        execute 'silent' 'edit!' './'.s:root_dir.'t/test.cpp'
+        execute 'silent' 'edit!' './t/test.cpp'
     end
 
     after
@@ -353,7 +413,7 @@ describe 'g:clang_format#auto_format_on_insert_leave'
     end
 
     it 'formats a inserted area on InsertLeave if the value is 1'
-        SKIP because somehow InsertEnter and InsertLeave events aren't fired
+        SKIP 'because somehow InsertEnter and InsertLeave events aren''t fired'
         execute 10
         execute 'normal' "iif(1+2)return 4;\<Esc>"
         Expect getline('.') ==# '    if (1 + 2) return 4;'
@@ -367,7 +427,7 @@ describe 'g:clang_format#auto_formatexpr'
     before
         let g:clang_format#auto_formatexpr = 1
         new
-        execute 'silent' 'edit!' './'.s:root_dir.'t/test.cpp'
+        execute 'silent' 'edit!' './t/test.cpp'
     end
 
     after
@@ -375,7 +435,7 @@ describe 'g:clang_format#auto_formatexpr'
     end
 
     it 'formats the text object using gq operator'
-        SKIP because of unknown backslash on formatting too long macros
+        SKIP 'because of unknown backslash on formatting too long macros'
         doautocmd Filetype cpp
         let expected = ClangFormat(1, line('$'))
         normal ggVGgq
@@ -384,3 +444,49 @@ describe 'g:clang_format#auto_formatexpr'
     end
 end
 " }}}
+
+" test for undo {{{
+describe 'undo formatting text'
+    before
+        let g:clang_format#detect_style_file = 0
+        new
+        execute 'silent' 'edit!' './t/test.cpp'
+    end
+
+    after
+        bdelete!
+    end
+
+    it 'restores previous text as editing buffer normally'
+        let prev = GetBuffer()
+        ClangFormat
+        undo
+        let buf = GetBuffer()
+        Expect prev ==# buf
+    end
+end
+" }}}
+
+" test for empty buffer {{{
+describe 'empty buffer'
+    before
+        let g:clang_format#detect_style_file = 0
+        new
+    end
+
+    after
+        bdelete!
+    end
+
+    it 'can format empty buffer'
+        ClangFormat
+    end
+
+    it 'can format a buffer containing only new lines'
+        call setline('.', ['', ''])
+        ClangFormat
+        call setline('.', ['', '', ''])
+        ClangFormat
+    end
+end
+" }}}"

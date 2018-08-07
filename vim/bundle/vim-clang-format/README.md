@@ -1,8 +1,10 @@
 Format your C family code
 =======================================
-[![Build Status](https://travis-ci.org/rhysd/vim-clang-format.png?branch=master)](https://travis-ci.org/rhysd/vim-clang-format)
+[![Build Status](https://travis-ci.org/rhysd/vim-clang-format.svg?branch=master)](https://travis-ci.org/rhysd/vim-clang-format)
 
-This plugin formats your code with specific coding style using [clang](http://clang.llvm.org/).  Currently below languages are supported.
+This plugin formats your code with specific coding style using [clang-format](http://clang.llvm.org/docs/ClangFormat.html).
+
+Currently below languages are supported:
 
 - C
 - C++
@@ -10,6 +12,7 @@ This plugin formats your code with specific coding style using [clang](http://cl
 - JavaScript
 - Java
 - TypeScript
+- Protobuf
 
 ## Screenshot
 
@@ -20,6 +23,10 @@ This plugin formats your code with specific coding style using [clang](http://cl
 - `clang-format` command (**3.4 or later**), which is bundled in Clang extra tools
 - [vim-operator-user](https://github.com/kana/vim-operator-user)(highly recommended)
 - [vimproc.vim](https://github.com/Shougo/vimproc.vim)(recommended in Windows)
+
+## Installation
+
+Copy `plugin`, `doc` and `autoload` directories into your `~/.vim` or use `:packadd` in Vim8. Or please use your favorite plugin manager to install this plugin. I recommend latter.
 
 ## Usage
 
@@ -103,6 +110,12 @@ Vim's format mappings (e.g. `gq`) get to use `clang-format` to format. This
 option is not comptabile with Vim's `textwidth` feature. You must set
 `textwidth` to `0` when the `formatexpr` is set.
 
+- `g:clang_format#enable_fallback_style`
+
+When the value is 0, `-fallback-style=none` option is added on executing clang-format command.
+It means that vim-clang-format does nothing when `.clang-format` is not found.
+The default value is 1.
+
 ## Vimrc Example
 
 ```vim
@@ -138,9 +151,8 @@ $ clang-format -dump-config
 ```
 
 clang-format's documentation and API documentation is useful in some cases.
-In paticular, the following link is useful to know the information of a key and its value of a style setting.
+In particular, the following link is useful to know the information of a key and its value of a style setting.
 [CLANG-FORMAT STYLE OPTIONS](http://clang.llvm.org/docs/ClangFormatStyleOptions.html)
-
 
 ## License
 

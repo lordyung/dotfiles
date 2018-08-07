@@ -2,9 +2,15 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 let s:on_windows = has('win32') || has('win64')
+let s:dict_t = type({})
+if exists('v:true')
+    let s:bool_t = type(v:true)
+else
+    let s:bool_t = -1
+endif
 
 " helper functions {{{
-function! s:has_vimproc()
+function! s:has_vimproc() abort
     if !exists('s:exists_vimproc')
         try
             silent call vimproc#version()
@@ -16,11 +22,11 @@ function! s:has_vimproc()
     return s:exists_vimproc
 endfunction
 
-function! s:system(str, ...)
+function! s:system(str, ...) abort
     let command = a:str
     let input = a:0 >= 1 ? a:1 : ''
 
-    if a:0 == 0
+    if a:0 == 0 || a:1 ==# ''
         let output = s:has_vimproc() ?
                     \ vimproc#system(command) : system(command)
     elseif a:0 == 1
@@ -36,49 +42,52 @@ function! s:system(str, ...)
 endfunction
 
 function! s:create_keyvals(key, val) abort
-    if type(a:val) == type({})
+    if type(a:val) == s:dict_t
         return a:key . ': {' . s:stringize_options(a:val) . '}'
     else
-        return a:key . ': ' . a:val
+        if type(a:val) == s:bool_t
+            return a:key . (a:val == v:true ? ': true' : ': false')
+        else
+            return a:key . ': ' . a:val
+        endif
     endif
 endfunction
 
 function! s:stringize_options(opts) abort
-    let dict_type = type({})
     let keyvals = map(items(a:opts), 's:create_keyvals(v:val[0], v:val[1])')
     return join(keyvals, ',')
 endfunction
 
-function! s:build_extra_options()
-    let extra_options = ""
-
+function! s:build_extra_options() abort
     let opts = copy(g:clang_format#style_options)
     if has_key(g:clang_format#filetype_style_options, &ft)
         call extend(opts, g:clang_format#filetype_style_options[&ft])
     endif
 
-    let extra_options .= ', ' . s:stringize_options(opts)
+    let extra_options = s:stringize_options(opts)
+    if !empty(extra_options)
+        let extra_options = ', ' . extra_options
+    endif
 
     return extra_options
 endfunction
 
-function! s:make_style_options()
+function! s:make_style_options() abort
     let extra_options = s:build_extra_options()
-    return printf("'{BasedOnStyle: %s, IndentWidth: %d, UseTab: %s%s}'",
+    return printf("{BasedOnStyle: %s, IndentWidth: %d, UseTab: %s%s}",
                         \ g:clang_format#code_style,
                         \ (exists('*shiftwidth') ? shiftwidth() : &l:shiftwidth),
-                        \ &l:expandtab==1 ? "false" : "true",
+                        \ &l:expandtab==1 ? 'false' : 'true',
                         \ extra_options)
 endfunction
 
-function! s:success(result)
-    return (s:has_vimproc() ? vimproc#get_last_status() : v:shell_error) == 0
-                \ && a:result !~# '^YAML:\d\+:\d\+: error: unknown key '
-                \ && a:result !~# '^\n\?$'
+function! s:success(result) abort
+    let exit_success = (s:has_vimproc() ? vimproc#get_last_status() : v:shell_error) == 0
+    return exit_success && a:result !~# '^YAML:\d\+:\d\+: error: unknown key '
 endfunction
 
-function! s:error_message(result)
-    echoerr "clang-format has failed to format."
+function! s:error_message(result) abort
+    echoerr 'clang-format has failed to format.'
     if a:result =~# '^YAML:\d\+:\d\+: error: unknown key '
         echohl ErrorMsg
         for l in split(a:result, "\n")[0:1]
@@ -88,7 +97,7 @@ function! s:error_message(result)
     endif
 endfunction
 
-function! clang_format#get_version()
+function! clang_format#get_version() abort
     if &shell =~# 'csh$' && executable('/bin/bash')
         let shell_save = &shell
         set shell=/bin/bash
@@ -109,7 +118,7 @@ function! clang_format#get_version()
     endtry
 endfunction
 
-function! clang_format#is_invalid()
+function! clang_format#is_invalid() abort
     if !exists('s:command_available')
         if !executable(g:clang_format#command)
             return 1
@@ -132,7 +141,7 @@ function! clang_format#is_invalid()
     return 0
 endfunction
 
-function! s:verify_command()
+function! s:verify_command() abort
     let invalidity = clang_format#is_invalid()
     if invalidity == 1
         echoerr "clang-format is not found. check g:clang_format#command."
@@ -143,10 +152,15 @@ endfunction
 
 function! s:shellescape(str) abort
     if s:on_windows && (&shell =~? 'cmd\.exe')
-        return '^"' . substitute(substitute(substitute(a:str,
-                    \ '[&|<>()^"%]', '^\0', 'g'),
-                    \ '\\\+\ze"', '\=repeat(submatch(0), 2)', 'g'),
-                    \ '\^"', '\\\0', 'g') . '^"'
+        " shellescape() surrounds input with single quote when 'shellslash' is on. But cmd.exe
+        " requires double quotes. Temporarily set it to 0.
+        let shellslash = &shellslash
+        set noshellslash
+        try
+            return shellescape(a:str)
+        finally
+            let &shellslash = shellslash
+        endtry
     endif
     return shellescape(a:str)
 endfunction
@@ -154,7 +168,7 @@ endfunction
 " }}}
 
 " variable definitions {{{
-function! s:getg(name, default)
+function! s:getg(name, default) abort
     " backward compatibility
     if exists('g:operator_'.substitute(a:name, '#', '_', ''))
         echoerr 'g:operator_'.substitute(a:name, '#', '_', '').' is deprecated. Please use g:'.a:name
@@ -175,88 +189,69 @@ let g:clang_format#style_options = s:getg('clang_format#style_options', {})
 let g:clang_format#filetype_style_options = s:getg('clang_format#filetype_style_options', {})
 
 let g:clang_format#detect_style_file = s:getg('clang_format#detect_style_file', 1)
+let g:clang_format#enable_fallback_style = s:getg('clang_format#enable_fallback_style', 1)
+
 let g:clang_format#auto_format = s:getg('clang_format#auto_format', 0)
 let g:clang_format#auto_format_on_insert_leave = s:getg('clang_format#auto_format_on_insert_leave', 0)
 let g:clang_format#auto_formatexpr = s:getg('clang_format#auto_formatexpr', 0)
 " }}}
 
 " format codes {{{
-function! s:detect_style_file()
+function! s:detect_style_file() abort
     let dirname = fnameescape(expand('%:p:h'))
     return findfile('.clang-format', dirname.';') != '' || findfile('_clang-format', dirname.';') != ''
 endfunction
 
-function! clang_format#format(line1, line2)
-    let args = printf(" -lines=%d:%d", a:line1, a:line2)
+function! clang_format#format(line1, line2) abort
+    let args = printf(' -lines=%d:%d', a:line1, a:line2)
     if ! (g:clang_format#detect_style_file && s:detect_style_file())
-        let args .= printf(" -style=%s ", s:make_style_options())
+        if g:clang_format#enable_fallback_style
+            let args .= ' ' . s:shellescape(printf('-style=%s', s:make_style_options())) . ' '
+        else
+            let args .= ' -fallback-style=none '
+        endif
     else
-        let args .= " -style=file "
+        let args .= ' -style=file '
     endif
-    let args .= printf("-assume-filename=%s ", s:shellescape(escape(expand('%'), " \t")))
+    let filename = expand('%')
+    if filename !=# ''
+        let args .= printf('-assume-filename=%s ', s:shellescape(escape(filename, " \t")))
+    endif
     let args .= g:clang_format#extra_args
-    let clang_format = printf("%s %s --", s:shellescape(g:clang_format#command), args)
-    return s:system(clang_format, join(getline(1, '$'), "\n"))
+    let clang_format = printf('%s %s --', s:shellescape(g:clang_format#command), args)
+    let source = join(getline(1, '$'), "\n")
+    return s:system(clang_format, source)
 endfunction
 " }}}
 
 " replace buffer {{{
-function! clang_format#replace(line1, line2)
-
+function! clang_format#replace(line1, line2, ...) abort
     call s:verify_command()
 
-    let pos_save = getpos('.')
-    let sel_save = &l:selection
-    let &l:selection = "inclusive"
-    let [save_g_reg, save_g_regtype] = [getreg('g'), getregtype('g')]
+    let pos_save = a:0 >= 1 ? a:1 : getpos('.')
+    let formatted = clang_format#format(a:line1, a:line2)
+    if !s:success(formatted)
+        call s:error_message(formatted)
+        return
+    endif
 
-    try
-        let formatted = clang_format#format(a:line1, a:line2)
+    let winview = winsaveview()
+    let splitted = split(formatted, '\n')
 
-        if s:success(formatted)
-            try
-                " Note:
-                " Replace current buffer with workaround not to move
-                " the cursor on undo (issue #8)
-                "
-                " The points are:
-                "   - Do not touch the first line.
-                "   - Use :put (p, P and :put! is not available).
-                "
-                " To meet above condition:
-                "   - Delete all lines except for the first line.
-                "   - Put formatted text except for the first line.
-                "
-                let i = stridx(formatted, "\n")
-                if i == -1 || getline(1) !=# formatted[:i-1]
-                    throw "fallback"
-                endif
-
-                call setreg('g', formatted[i+1:], 'V')
-                undojoin | silent normal! 2gg"_dG
-                silent put g
-            catch
-                " Fallback:
-                " The previous way.  It lets the cursor move to the first line
-                " on undo.
-                call setreg('g', formatted, 'V')
-                silent keepjumps normal! ggVG"gp
-            endtry
-        else
-            call s:error_message(formatted)
-        endif
-    finally
-        call setreg('g', save_g_reg, save_g_regtype)
-        let &l:selection = sel_save
-        call setpos('.', pos_save)
-    endtry
+    silent! undojoin
+    if line('$') > len(splitted)
+        execute len(splitted) .',$delete' '_'
+    endif
+    call setline(1, splitted)
+    call winrestview(winview)
+    call setpos('.', pos_save)
 endfunction
 " }}}
 
 " auto formatting on insert leave {{{
 let s:pos_on_insertenter = []
 
-function! s:format_inserted_area()
+function! s:format_inserted_area() abort
     let pos = getpos('.')
     " When in the same buffer
     if &modified && ! empty(s:pos_on_insertenter) && s:pos_on_insertenter[0] == pos[0]
@@ -265,7 +260,7 @@ function! s:format_inserted_area()
     endif
 endfunction
 
-function! clang_format#enable_format_on_insert()
+function! clang_format#enable_format_on_insert() abort
     augroup plugin-clang-format-auto-format-insert
         autocmd!
         autocmd InsertEnter <buffer> let s:pos_on_insertenter = getpos('.')
@@ -275,24 +270,24 @@ endfunction
 " }}}
 
 " toggle auto formatting {{{
-function! clang_format#toggle_auto_format()
+function! clang_format#toggle_auto_format() abort
     let g:clang_format#auto_format = !g:clang_format#auto_format
     if g:clang_format#auto_format
-        echo "Auto clang-format: enabled"
+        echo 'Auto clang-format: enabled'
     else
-        echo "Auto clang-format: disabled"
+        echo 'Auto clang-format: disabled'
     endif
 endfunction
 " }}}
 
 " enable auto formatting {{{
-function! clang_format#enable_auto_format()
+function! clang_format#enable_auto_format() abort
     let g:clang_format#auto_format = 1
 endfunction
 " }}}
 
 " disable auto formatting {{{
-function! clang_format#disable_auto_format()
+function! clang_format#disable_auto_format() abort
     let g:clang_format#auto_format = 0
 endfunction
 " }}}
