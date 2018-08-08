@@ -40,6 +40,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'will133/vim-dirdiff'
 Plugin 'junegunn/fzf'
 Plugin 'w0rp/ale'
+Plugin 'rizzatti/dash.vim'
 
 " Plugin 'mileszs/ack.vim'
 " Plugin 'brookhong/cscope.vim'
