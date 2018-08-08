@@ -245,8 +245,8 @@ if [ $(uname) = "Darwin" ]; then
     # Change working directory to the top-most Finder window location
 fi
 
-if [ -f zsh_functions.zsh ]; then
-    source zsh_functions.zsh
+if [ -f $HOME/.dotfiles/zsh_functions.zsh ]; then
+    source $HOME/.dotfiles/zsh_functions.zsh
 fi
 
 if [ -f $HOME/.custom.zsh ]; then
