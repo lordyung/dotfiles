@@ -43,6 +43,7 @@ Plugin 'w0rp/ale'
 Plugin 'rizzatti/dash.vim'
 Plugin 'gu-fan/riv.vim'
 Plugin 'gu-fan/InstantRst'
+Plugin 'previm/previm'
 
 " Plugin 'mileszs/ack.vim'
 " Plugin 'brookhong/cscope.vim'
