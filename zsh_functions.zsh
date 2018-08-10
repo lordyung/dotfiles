@@ -133,7 +133,7 @@ sudoe() {
         echo "$text" | sudo tee $append "$1" >/dev/null; return $?
     done
 
-    echo "Usage: $0 [-a|--no-append] [text] <file>"; return 1
+    echo "Usage: $0 [-a|--no-append] [text] <file>"; return -1
 
 }
 
@@ -384,7 +384,7 @@ function fs() {
 function rootness() {
     # Make sure only root can run our script
     if [ $EUID -ne 0 ]; then
-        echo "You need to be root to perform this command." && exit 1
+        echo "You need to be root to perform this command." && return 1
     fi
 }
 function qpb-all() {
@@ -447,7 +447,7 @@ function qsd() {
         Key=$1
     else
         echo Usuage: qsd [key]
-        exit
+        return -1
     fi
 
     qshell delete distfiles $1
@@ -520,26 +520,25 @@ function qshell() {
 }
 function ack(){
     # Quick search in a directory for a string ($@).
-    #
     set -e
     hash ack 2>/dev/null || {
     if [ $(check_distro) = 'Ubuntu' ]; then
-        sudo apt-get install -y ack-grep || exit
+        sudo apt-get install -y ack-grep || return $?;
     elif [ $(check_distro) = 'RedHat' ]; then
-        sudo yum install -y ack || exit
+        sudo yum install -y ack || return $?;
     elif [ $(check_distro) = 'Darwin' ]; then
-        brew install ack || exit
+        brew install ack || return $?;
     else
-        echo "Don't Support this system." && exit
+        echo "Don't Support this system." && return -1
     fi
 }
 
-# use -iru to search directories ack usually ignores (like .git)
-if [ -x /usr/bin/ack-grep ]; then
-    ack-grep "$@"
-else
-    /usr/local/bin/ack  "$@"
-fi
+    # use -iru to search directories ack usually ignores (like .git)
+    if [ -x /usr/bin/ack-grep ]; then
+        ack-grep "$@"
+    else
+        /usr/local/bin/ack  "$@"
+    fi
 }
 function qs(){
     Bucket=distfiles
@@ -557,7 +556,7 @@ function qs(){
         done
     else
         echo Usuage: qs \(key\) \(prefix\)
-        exit
+        return
     fi
 }
 function qp(){
@@ -572,18 +571,18 @@ function qp(){
         Key=$Prefix/$1
     else
         echo Usuage: qp [Key] \(Prefix\)
-        exit
+        return
     fi
 
     url=http://ot2jmekaj.bkt.clouddn.com/`qshell urlencode $Key`
 
     # 测试是否存在此文件
     wget -T 15 --tries=1 --spider $url > /dev/null 2>&1
-    [ $? -eq 0 ] && echo $url && hash pbcopy > /dev/null 2>&1  && echo -n $url | pbcopy  && exit  # 将内容复制到Mac剪贴板
+    [ $? -eq 0 ] && echo $url && hash pbcopy > /dev/null 2>&1  && echo -n $url | pbcopy && return # 将内容复制到Mac剪贴板
 
     # 将文件推送到Bucket
     qshell fput $Bucket $Key $LocalFile
-    [ $? -eq 0 ] && echo $url && hash pbcopy > /dev/null 2>&1  && echo -n $url | pbcopy  && exit  # 将内容复制到Mac剪贴板
+    [ $? -eq 0 ] && echo $url && hash pbcopy > /dev/null 2>&1  && echo -n $url | pbcopy # 将内容复制到Mac剪贴板
 }
 function gpatch(){
 
