@@ -552,7 +552,7 @@ function qs(){
     elif [ $#  -eq 1 ]; then
         for file in `qshell listbucket $Bucket /tmp/list &&cat /tmp/list |awk '{print $1}' |grep $1`
         do
-            echo $file: $Domain/$(qshell urlencode $file)
+            echo $file: $Domain/$file
         done
     else
         echo Usuage: qs \(key\) \(prefix\)
@@ -574,7 +574,7 @@ function qp(){
         return
     fi
 
-    url=http://ot2jmekaj.bkt.clouddn.com/`qshell urlencode $Key`
+    url=http://ot2jmekaj.bkt.clouddn.com/$Key
 
     # 测试是否存在此文件
     wget -T 15 --tries=1 --spider $url > /dev/null 2>&1
