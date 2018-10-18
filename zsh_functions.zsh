@@ -544,13 +544,17 @@ function qs(){
     Bucket=distfiles
     Domain=http://ot2jmekaj.bkt.clouddn.com
 
+    if [ ! -f /tmp/list ]; then
+        qshell listbucket $Bucket /tmp/list
+    fi
+
     if [ $#  -eq 0 ]; then
-        for file in `qshell listbucket $Bucket /tmp/list &&cat /tmp/list |awk '{print $1}'`
+        for file in `cat /tmp/list |awk '{print $1}'`
         do
             echo $file
         done
     elif [ $#  -eq 1 ]; then
-        for file in `qshell listbucket $Bucket /tmp/list &&cat /tmp/list |awk '{print $1}' |grep $1`
+        for file in `cat /tmp/list |awk '{print $1}' |grep $1`
         do
             echo $file: $Domain/$file
         done
