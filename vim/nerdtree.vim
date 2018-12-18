@@ -8,6 +8,7 @@ if isdirectory(expand("~/.vim/bundle/nerdtree"))
     let NERDTreeShowHidden=1
     let NERDTreeKeepTreeInNewTab=1
     let g:nerdtree_tabs_open_on_gui_startup=0
+    let g:NERDTreeWinSize=25
 
 	" Open a NERDTree automatically when vim starts up
 	" autocmd vimenter * NERDTree
@@ -21,9 +22,11 @@ if isdirectory(expand("~/.vim/bundle/nerdtree"))
 	let g:NERDTreeDirArrowExpandable = '▸'
 	let g:NERDTreeDirArrowCollapsible = '▾'
 
+    " autocmd vimenter * NERDTree
+
 	" How can I open NERDTree automatically when vim starts up on opening a directory?
-	" autocmd StdinReadPre * let s:std_in=1
-	" autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0]
+    " autocmd StdinReadPre * let s:std_in=1
+    " autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0]
 endif
 " nerdtree-git-plugin
 if isdirectory(expand("~/.vim/bundle/nerdtree-git-plugin"))

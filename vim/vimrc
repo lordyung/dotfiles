@@ -244,6 +244,7 @@ set fileformat=unix                                 "设置新文件的<EOL>格�
 set fileformats=unix,mac,dos                        "给出文件的<EOL>格式类型
 set foldmarker={,}
 set foldmethod=marker
+set foldlevel=10
 set guifont=courier_new:h10              			 "设置字体:字号（字体名称空格用下划线代替）
 set guioptions-=L       " Left-hand scrollbar is present.
 set guioptions-=T       " Include Toolbar.
@@ -621,7 +622,11 @@ source ~/.vim/snipmate.vim
 source ~/.vim/syntastic.vim
 source ~/.vim/tmux.vim
 source ~/.vim/cscope.vim
+source ~/.vim/tagbar.vim
 
 if filereadable("tags.vim")
     source ~/.vim/tags.vim
+    cs add ~/v5_sdk_sc1651_v2/lichee/linux-4.4/cscope.out
 endif
+cs add ~/v5_sdk_sc1651_v2/lichee/linux-4.4/cscope.out ~/v5_sdk_sc1651_v2/lichee/linux-4.4/
+cs add ~/v5_sdk_sc1651/v5sdv/IPCLinuxPlatform/cscope.out  ~/v5_sdk_sc1651/v5sdv/IPCLinuxPlatform

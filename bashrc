@@ -56,7 +56,8 @@ else
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \$\[\033[00m\] '
+    PS1='\[\033[01;34m\]\w \$\[\033[00m\] '
+    # PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \$\[\033[00m\] '
 else
     PS1='\u@\h:\w\$ '
 fi
@@ -69,5 +70,8 @@ fi
 if [ -f $HOME/.custom.zsh ]; then
     source $HOME/.custom.zsh
 fi
+source ~/.dotfiles/shrc.sh
+source ~/.dotfiles/functions.sh
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+# source build/envsetup.sh && lunch crane_cdr-eng

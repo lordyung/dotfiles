@@ -1,6 +1,8 @@
 *.o
 *.obj
 *.la
+.DS_Store
 ._*
 *.tmp
 *.bak
+*.si4project

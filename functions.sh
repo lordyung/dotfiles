@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # Create a .tar.gz archive, using `zopfli`, `pigz` or `gzip` for compression
 function targz() {
     local tmpFile="${@%/}.tar";
@@ -352,15 +353,33 @@ function tag() {
 }
 
 function dist() {
-    grep --color=always $1 ~/.dotfiles/lib/distfiles.txt | sed 's|^|http://mirrors.ustc.edu.cn/gentoo/distfiles/|g'
+    grep --color=always $1 ~/.dotfiles/distfiles.txt | sed 's|^|http://mirrors.163.com/gentoo/distfiles/|g'
 }
 
-function commit-msg() {
+function cmsg() {
     if [ -d .git ];then
-        scp code.lordyung.com:hooks/commit-msg .git/hooks/
+        scp ~/.dotfiles/bin/commit-msg .git/hooks/
     else
         echo 'Not in git root directory!'
     fi
+}
+
+function chmod_x() {
+    find -type f -iname "*.c" -exec chmod 644 {} \;
+    find -type f -iname "*.h" -exec chmod 644 {} \;
+    find -type f -iname "*.cpp" -exec chmod 644 {} \;
+    find -type f -iname "*.hpp" -exec chmod 644 {} \;
+    find -type f -iname "*.hh" -exec chmod 644 {} \;
+    find -type f -iname "*.mk" -exec chmod 644 {} \;
+    find -type f -iname "*.conf" -exec chmod 644 {} \;
+    find -type f -iname "*.txt" -exec chmod 644 {} \;
+    find -type f -iname "*.xml" -exec chmod 644 {} \;
+    find -type f -iname "*.cmake" -exec chmod 644 {} \;
+    find -type f -iname "*.S" -exec chmod 644 {} \;
+    find -type f -iname "Makefile.am" -exec chmod 644 {} \;
+    find -type f -iname "Makefile" -exec chmod 644 {} \;
+    find -type f -iname ".gitignore" -exec chmod 644 {} \;
+    find -type f -iname "AEmptyFile" -exec chmod 644 {} \;
 }
 
 function gerrit() {
