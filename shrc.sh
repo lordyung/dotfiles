@@ -17,7 +17,7 @@ export LC_ALL='en_US.UTF-8';
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US:en
 
-export PATH=~/.dotfiles/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export PATH=~/.local/bin/:~/.dotfiles/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 export MANPATH=/opt/local/share/man:$MANPATH
 # export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
