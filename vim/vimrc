@@ -45,6 +45,23 @@ Plugin 'gu-fan/riv.vim'
 Plugin 'gu-fan/InstantRst'
 Plugin 'previm/previm'
 
+" Vim plugin for Graphviz dot
+Plugin 'wannesm/wmgraphviz.vim'
+
+" Deps {
+        Plugin 'MarcWeber/vim-addon-mw-utils'
+        Plugin 'tomtom/tlib_vim'
+        if executable('ag')
+            Plugin 'mileszs/ack.vim'
+            let g:ackprg = 'ag --nogroup --nocolor --column --smart-case'
+        elseif executable('ack-grep')
+            let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+            Plugin 'mileszs/ack.vim'
+        elseif executable('ack')
+            Plugin 'mileszs/ack.vim'
+        endif
+    " }
+
 " Plugin 'mileszs/ack.vim'
 " Plugin 'brookhong/cscope.vim'
 " Plugin 'elzr/vim-json'
@@ -630,3 +647,5 @@ if filereadable("tags.vim")
 endif
 cs add ~/v5_sdk_sc1651_v2/lichee/linux-4.4/cscope.out ~/v5_sdk_sc1651_v2/lichee/linux-4.4/
 cs add ~/v5_sdk_sc1651/v5sdv/IPCLinuxPlatform/cscope.out  ~/v5_sdk_sc1651/v5sdv/IPCLinuxPlatform
+
+cs add ~/mbed/NUCLEO_F767ZI/cscope.out /Users/lordyung/mbed/NUCLEO_F767ZI/
