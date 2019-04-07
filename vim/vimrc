@@ -6,23 +6,60 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+" Bundles {
+" Deps {
 Plugin 'VundleVim/Vundle.vim'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+if executable('ag')
+    Plugin 'mileszs/ack.vim'
+    let g:ackprg = 'ag --nogroup --nocolor --column --smart-case'
+elseif executable('ack-grep')
+    let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+    Plugin 'mileszs/ack.vim'
+elseif executable('ack')
+    Plugin 'mileszs/ack.vim'
+endif
+" }
+
+" Programming
 Plugin 'c.vim'
+" Plugin 'scrooloose/syntastic'
+Plugin 'tpope/vim-fugitive'
+Plugin 'mattn/webapi-vim'
+Plugin 'mattn/gist-vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-commentary'
+Plugin 'godlygeek/tabular'
+Plugin 'luochen1990/rainbow'
+if executable('ctags')
+    Plugin 'majutsushi/tagbar'
+endif
+
+" Snippets & AutoComplete
+"snipmate
+Plugin 'Shougo/neocomplcache'
+Plugin 'Shougo/neocomplete.vim'
+Plugin 'Shougo/neosnippet'
+Plugin 'Shougo/neosnippet-snippets'
+Plugin 'SirVer/ultisnips'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
+
 Plugin 'easymotion/vim-easymotion'
 Plugin 'vim-scripts/cmake'
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'kien/ctrlp.vim'
 Plugin 'tacahiroy/ctrlp-funky'
-Plugin 'majutsushi/tagbar'
 Plugin 'matchit.zip'
-Plugin 'godlygeek/tabular'
 Plugin 'msanders/snipmate.vim'
 Plugin 'plasticboy/vim-markdown'
-Plugin 'Shougo/neocomplete.vim'
+" Plugin 'Shougo/neocomplete.vim'
 Plugin 'kana/vim-operator-user'
 Plugin 'rhysd/vim-clang-format'
-Plugin 'scrooloose/nerdcommenter'
+" Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'junegunn/vim-easy-align'
@@ -31,7 +68,7 @@ Plugin 'vim-perl/vim-perl'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-scripts/ShowMarks'
-"Plugin 'vim-syntastic/syntastic'
+" Plugin 'vim-syntastic/syntastic'
 Plugin 'christoomey/vim-system-copy'
 Plugin 'fatih/vim-go'
 Plugin 'Konfekt/FastFold'
@@ -47,20 +84,13 @@ Plugin 'previm/previm'
 
 " Vim plugin for Graphviz dot
 Plugin 'wannesm/wmgraphviz.vim'
+" Vim plugin for tex
+Plugin 'lervag/vimtex'
 
-" Deps {
-        Plugin 'MarcWeber/vim-addon-mw-utils'
-        Plugin 'tomtom/tlib_vim'
-        if executable('ag')
-            Plugin 'mileszs/ack.vim'
-            let g:ackprg = 'ag --nogroup --nocolor --column --smart-case'
-        elseif executable('ack-grep')
-            let g:ackprg="ack-grep -H --nocolor --nogroup --column"
-            Plugin 'mileszs/ack.vim'
-        elseif executable('ack')
-            Plugin 'mileszs/ack.vim'
-        endif
-    " }
+" Plugin 'octol/vim-cpp-enhanced-highlight'
+" Plugin 'Chiel92/vim-autoformat'
+" Plugin 'quark-zju/vim-cpp-auto-include'
+
 
 " Plugin 'mileszs/ack.vim'
 " Plugin 'brookhong/cscope.vim'
