@@ -30,20 +30,23 @@ $%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 $%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 == comment.file-description == start ==
 /*
+ * Copyright (c) |YEAR| |COMPANY|
+ *
  * Filename: |FILENAME|
  * Created: |DATE| |TIME|
  * Author: |AUTHOR|, |EMAIL|
+ * Version: 0.1
  * Description: <CURSOR>
  */
-#include <stdlib.h>
-#include <stdio.h>
-
 $%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 == comment.file-description-header == start ==
 /*
+ * Copyright (c) |YEAR| Rayto Life and Analytical Sciences Co.,Ltd
+ *
  * Filename: |FILENAME|
  * Created: |DATE| |TIME|
  * Author: |AUTHOR| ,|EMAIL|
+ * Version: 0.1
  * Description: <CURSOR>
  */
 
