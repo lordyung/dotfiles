@@ -670,6 +670,7 @@ source ~/.vim/syntastic.vim
 source ~/.vim/tmux.vim
 source ~/.vim/cscope.vim
 source ~/.vim/tagbar.vim
+source ~/.vim/tex.vim
 
 if filereadable("tags.vim")
     source ~/.vim/tags.vim

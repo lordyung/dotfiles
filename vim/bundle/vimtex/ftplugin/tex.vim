@@ -7,7 +7,6 @@
 if !get(g:, 'vimtex_enabled', 1)
   finish
 endif
-XXX
 
 if exists('b:did_ftplugin')
   finish
